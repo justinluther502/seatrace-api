@@ -18,32 +18,32 @@ class Rower(models.Model):
 
 class Hull(models.Model):
     HULL_MAKES = (
-        ('EMPCH', 'Empacher'),
-        ('MILL', 'Millenium'),
-        ('RESOL', 'Resolute'),
+        ('Empacher', 'Empacher'),
+        ('Millenium', 'Millenium'),
+        ('Resolute', 'Resolute'),
     )
     SIZES = (
-        ('S', 'Single'),
-        ('D', 'Double'),
-        ('P', 'Pair'),
-        ('CF', 'Coxed Four'),
-        ('SF', 'Straight Four'),
-        ('Q', 'Quad'),
-        ('E', 'Eight')
+        ('Single', 'Single'),
+        ('Double', 'Double'),
+        ('Pair', 'Pair'),
+        ('Coxed Four', 'Coxed Four'),
+        ('Straight Four', 'Straight Four'),
+        ('Quad', 'Quad'),
+        ('Eight', 'Eight')
     )
     make = models.CharField(choices=HULL_MAKES, max_length=30)
     size = models.CharField(choices=SIZES, max_length=20)
-    year = models.DateTimeField()
+    year = models.SmallIntegerField()
 
     class Meta:
         ordering = ['year']
 
     def __str__(self):
-        return self.make + "_" + str(self.year.year)
+        return self.make + "_" + str(self.year)
 
 
 class Boat(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     hull = models.ForeignKey(Hull, on_delete=models.CASCADE)
     crewmember = models.ManyToManyField(Rower)
 
@@ -51,4 +51,5 @@ class Boat(models.Model):
         ordering = ['date']
 
     def __str__(self):
-        return self.hull.__str__() + " raced at " + str(self.date)
+        return self.hull.__str__() + " raced on " + str(
+            self.date) + " Race ID: " + str(self.id)
