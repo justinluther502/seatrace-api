@@ -17,7 +17,7 @@ class HullSerializer(serializers.ModelSerializer):
 
 class BoatSerializer(serializers.ModelSerializer):
     hull = HullSerializer(many=False, read_only=True)
-
+    crewmembers = RowerSerializer(many=True, read_only=True)
     class Meta:
         model = Boat
-        fields = ['date', 'hull', 'crewmember', 'id']
+        fields = ['date', 'hull', 'crewmembers', 'id']

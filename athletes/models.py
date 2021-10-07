@@ -45,7 +45,7 @@ class Hull(models.Model):
 class Boat(models.Model):
     date = models.DateField()
     hull = models.ForeignKey(Hull, on_delete=models.CASCADE)
-    crewmember = models.ManyToManyField(Rower)
+    crewmembers = models.ManyToManyField(Rower)
 
     class Meta:
         ordering = ['date']
