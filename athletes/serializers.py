@@ -6,7 +6,7 @@ class RowerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rower
         fields = ['first_name', 'last_name', 'height_ft', 'height_in', 'id',
-                  'mmr', 'stroke_mmr']
+                  'mmr', 'mmr_uncertainty']
 
 
 class HullSerializer(serializers.ModelSerializer):
