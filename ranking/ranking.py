@@ -24,7 +24,7 @@ def race_update(winner: Tuple[Rating], loser: Tuple[Rating]) -> (
 
 def save_mmr(rower_keys: Tuple[int], new_ratings: Tuple[Rating]) -> None:
     """
-    Updates a tuple of Rower instances with new MMRs after a recorded race.
+    Updates a set of Rower instances with new MMRs after a recorded race.
 
     Does not return anything. Instances are updated via their save() method.
 
@@ -33,6 +33,6 @@ def save_mmr(rower_keys: Tuple[int], new_ratings: Tuple[Rating]) -> None:
     """
     for idx, rower_key in enumerate(rower_keys):
         rower_model = Rower.objects.get(id=rower_key)
-        rower_model.mmr = new_ratings[idx]['mu']
-        rower_model.mmr_uncertainty = new_ratings[idx]['sigma']
+        rower_model.mmr = new_ratings[idx].mu
+        rower_model.mmr_uncertainty = new_ratings[idx].sigma
         rower_model.save()
