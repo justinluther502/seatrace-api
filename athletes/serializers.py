@@ -1,4 +1,4 @@
-from .models import Rower, Hull, Boat
+from .models import Rower, Hull, Race
 from rest_framework import serializers
 
 
@@ -15,9 +15,14 @@ class HullSerializer(serializers.ModelSerializer):
         fields = ['make', 'size', 'year', 'id']
 
 
-class BoatSerializer(serializers.ModelSerializer):
-    hull = HullSerializer(many=False, read_only=True)
-    crewmembers = RowerSerializer(many=True, read_only=True)
+class RaceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Boat
-        fields = ['date', 'hull', 'crewmembers', 'id']
+        model = Race
+        fields = ['date', 'winner_hull', 'loser_hull', 'winner_crew',
+                  'loser_crew', 'draw', 'id']
+    winner_hull = HullSerializer(many=False)
+    loser_hull = HullSerializer(many=False)
+    winner_crew = RowerSerializer(many=True)
+    loser_crew = RowerSerializer(many=True)
+
+

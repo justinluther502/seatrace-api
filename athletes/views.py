@@ -1,7 +1,7 @@
-from .models import Rower, Hull, Boat
+from .models import Rower, Hull, Race
 from rest_framework import viewsets
 from rest_framework import permissions
-from athletes.serializers import RowerSerializer, HullSerializer, BoatSerializer
+from athletes.serializers import RowerSerializer, HullSerializer, RaceSerializer
 
 
 class RowerViewSet(viewsets.ModelViewSet):
@@ -16,7 +16,11 @@ class HullViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-class BoatViewSet(viewsets.ModelViewSet):
-    queryset = Boat.objects.all().order_by('date')
-    serializer_class = BoatSerializer
+class RaceViewSet(viewsets.ModelViewSet):
+    queryset = Race.objects.all().order_by('date')
+    serializer_class = RaceSerializer
     permission_classes = [permissions.AllowAny]
+
+    # def create(self, request):
+    #     # Use online docs to make writeable nested serializer.
+    #     pass

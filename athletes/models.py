@@ -42,14 +42,19 @@ class Hull(models.Model):
         return self.make + "_" + str(self.year)
 
 
-class Boat(models.Model):
+class Race(models.Model):
     date = models.DateField()
-    hull = models.ForeignKey(Hull, on_delete=models.CASCADE)
-    crewmembers = models.ManyToManyField(Rower)
+    winner_hull = models.ForeignKey(Hull, on_delete=models.CASCADE,
+                                    related_name='winner_hull')
+    winner_crew = models.ManyToManyField(Rower, related_name='winner_crew')
+    loser_hull = models.ForeignKey(Hull, on_delete=models.CASCADE,
+                                   related_name='loser_hull')
+    loser_crew = models.ManyToManyField(Rower, related_name='loser_crew')
+    draw = models.BooleanField()
 
     class Meta:
         ordering = ['date']
 
     def __str__(self):
-        return self.hull.__str__() + " raced on " + str(
-            self.date) + " Race ID: " + str(self.id)
+        return self.winner_hull.__str__() + "and" + self.loser_hull.__str__() +\
+               " raced on " + str(self.date) + " Race ID: " + str(self.id)

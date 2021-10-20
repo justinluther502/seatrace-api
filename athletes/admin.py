@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Rower, Hull, Boat
+from .models import Rower, Hull, Race
 
 admin.site.register(Rower)
 admin.site.register(Hull)
-admin.site.register(Boat)
+admin.site.register(Race)
 # Register your models here.
