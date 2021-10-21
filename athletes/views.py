@@ -1,6 +1,6 @@
 from .models import Rower, Hull, Race
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions, status
+from rest_framework.response import Response
 from athletes.serializers import RowerSerializer, HullSerializer, RaceSerializer
 
 
@@ -21,6 +21,10 @@ class RaceViewSet(viewsets.ModelViewSet):
     serializer_class = RaceSerializer
     permission_classes = [permissions.AllowAny]
 
-    # def create(self, request):
-    #     # Use online docs to make writeable nested serializer.
-    #     pass
+    def create(self, request):
+        serializer = RaceSerializer(data=request.data)
+        if serializer.is_valid():
+            # TODO: put MMR update stuff here.
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

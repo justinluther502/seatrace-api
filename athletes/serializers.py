@@ -1,5 +1,6 @@
 from .models import Rower, Hull, Race
 from rest_framework import serializers
+from drf_writable_nested import WritableNestedModelSerializer
 
 
 class RowerSerializer(serializers.ModelSerializer):
@@ -15,7 +16,7 @@ class HullSerializer(serializers.ModelSerializer):
         fields = ['make', 'size', 'year', 'id']
 
 
-class RaceSerializer(serializers.ModelSerializer):
+class RaceSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Race
         fields = ['date', 'winner_hull', 'loser_hull', 'winner_crew',
