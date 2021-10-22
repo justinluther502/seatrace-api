@@ -25,5 +25,3 @@ class RaceSerializer(WritableNestedModelSerializer):
     loser_hull = HullSerializer(many=False)
     winner_crew = RowerSerializer(many=True)
     loser_crew = RowerSerializer(many=True)
-
-

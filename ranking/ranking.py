@@ -1,9 +1,6 @@
 from trueskill import Rating, TrueSkill
 from typing import Tuple
 from athletes.models import Rower
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import authentication, permissions
 
 
 def race_update(winner: Tuple[Rating], loser: Tuple[Rating]) -> (
@@ -39,16 +36,3 @@ def save_mmr(rower_keys: Tuple[int], new_ratings: Tuple[Rating]) -> None:
         rower_model.mmr = new_ratings[idx].mu
         rower_model.mmr_uncertainty = new_ratings[idx].sigma
         rower_model.save()
-
-
-def handle_race_results(winner_keys: Tuple[int], loser_keys: Tuple[int]):
-    pass
-
-
-class HandleRaceResults(APIView):
-    permission_classes = permissions.AllowAny
-
-    def post(self, request, format=None):
-        print(request)
-        # return Response(usernames)
-        pass
