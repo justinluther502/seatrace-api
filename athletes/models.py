@@ -6,8 +6,8 @@ class Rower(models.Model):
     last_name = models.CharField(max_length=30)
     height_ft = models.PositiveSmallIntegerField()
     height_in = models.PositiveSmallIntegerField()
-    mmr = models.PositiveSmallIntegerField()
-    mmr_uncertainty = models.PositiveSmallIntegerField()
+    mmr = models.FloatField()
+    mmr_uncertainty = models.FloatField()
 
     class Meta:
         ordering = ['last_name']

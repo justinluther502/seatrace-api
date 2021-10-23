@@ -1,10 +1,15 @@
 from trueskill import Rating, TrueSkill
-from typing import Tuple
+from typing import List
 from athletes.models import Rower
 
 
-def race_update(winner: Tuple[Rating], loser: Tuple[Rating]) -> (
-        Tuple[Rating], Tuple[Rating]):
+def id_to_rating(rower_id: int) -> Rating:
+    rower_obj = Rower.objects.get(id=rower_id)
+    return Rating(mu=rower_obj.mmr, sigma=rower_obj.mmr_uncertainty)
+
+
+def race_update(winner: List[Rating], loser: List[Rating]) -> (
+        List[Rating], List[Rating]):
     """
     Updates MMR for athletes in both teams. Teams are lists of Rating instances.
 
@@ -22,7 +27,7 @@ def race_update(winner: Tuple[Rating], loser: Tuple[Rating]) -> (
     return new_winner_tuple, new_loser_tuple
 
 
-def save_mmr(rower_keys: Tuple[int], new_ratings: Tuple[Rating]) -> None:
+def save_mmr(rower_keys: List[int], new_ratings: List[Rating]) -> None:
     """
     Updates a set of Rower instances with new MMRs after a recorded race.
 
