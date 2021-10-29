@@ -25,9 +25,9 @@ class RaceViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         serializer = RaceSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
-
             winners = serializer.data['winner_crew']
             winner_objs = []
             for winner in winners:
@@ -53,5 +53,9 @@ class RaceViewSet(viewsets.ModelViewSet):
             save_mmr(winner_keys, tuple(new_win_ratings))
             save_mmr(loser_keys, tuple(new_lose_ratings))
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            results = {'winratings': new_win_ratings,
+                       'loseratings': new_lose_ratings}
+            results.update(serializer.data)
+
+            return Response(results, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
